@@ -13,6 +13,8 @@ public class CompletePlayerController : MonoBehaviour {
 	private Rigidbody2D rb2d;		//Store a reference to the Rigidbody2D component required to use 2D Physics.
 	private int count;				//Integer to store the number of pickups collected so far.
 
+	public GameObject particleSystemPrefab;
+
 	// Use this for initialization
 	void Start()
 	{
@@ -59,8 +61,16 @@ public class CompletePlayerController : MonoBehaviour {
 			
 			//Update the currently displayed count by calling the SetCountText function.
 			SetCountText ();
+
 		}
-		
+	}
+
+	// 壁に当たった時にパーティクルを表示する
+	void OnCollisionEnter2D (Collision2D collider)
+	{
+		foreach (ContactPoint2D contact  in collider.contacts) {
+			Instantiate(particleSystemPrefab, contact.point, Quaternion.identity);
+		}
 
 	}
 
